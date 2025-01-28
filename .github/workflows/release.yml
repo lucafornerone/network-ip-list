@@ -1,0 +1,111 @@
+name: Release
+description: Create GitHub release
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Read version from package.json
+        id: read_version
+        run: |
+          current_tag=$(jq -r '.version' package.json)
+          echo "current_tag=$current_tag" >> $GITHUB_ENV
+
+      - name: Get previous tag
+        id: get_previous_tag
+        run: |
+          if [ -z "${{ github.event.inputs.previous_tag }}" ]; then
+            previous_tag=$(git log --tags --simplify-by-decoration --pretty="format:%D" | grep -o "tag: [^,]*" | head -n 1 | sed 's/tag: //')
+          else
+            previous_tag=${{ github.event.inputs.previous_tag }}
+          fi
+          echo "previous_tag=$previous_tag" >> $GITHUB_ENV
+
+      - name: Create new tag
+        id: create_new_tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag -a ${{ env.current_tag }} -m "Release ${{ env.current_tag }}"
+          git push origin ${{ env.current_tag }}
+
+      - name: Generate release notes
+        id: generate_release_notes
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          result-encoding: string
+          script: |
+            const { owner, repo } = context.repo;
+            const previousTag = process.env.previous_tag;
+            const currentTag = process.env.current_tag;
+
+            let commitList;
+            if (previousTag) {
+              const commits = await github.rest.repos.compareCommits({
+                owner,
+                repo,
+                base: previousTag,
+                head: currentTag,
+              });
+              commitList = commits.data.commits;
+            } else {
+              const commits = await github.rest.repos.listCommits({
+                owner,
+                repo,
+              });
+              commitList = commits.data;
+            }
+
+            // get pr title with GitHub api
+            const getPrInfo = async (prNumber) => {
+              const pr = await github.rest.pulls.get({
+                owner,
+                repo,
+                pull_number: prNumber
+              });
+              return {
+                title: pr.data.title,
+                prUrl: pr.data.html_url
+              };
+            };
+
+            // filter only 'Merge pull request' commits
+            const prList = [];
+            for (const commit of commitList) {
+              if (commit.commit.message.includes('Merge pull request')) {
+                const prNumber = commit.commit.message.match(/#(\d+)/)?.[1];
+                if (prNumber) {
+                  const prInfo = await getPrInfo(prNumber);
+                  if (!prInfo.title.startsWith('chore(main): release')) {
+                    prList.push(`- ${prInfo.title} ([#${prNumber}](${prInfo.prUrl})) ([${commit.sha.substring(0, 7)}](${commit.html_url}))`);
+                  }
+                }
+              }
+            }
+
+            return prList.length > 0 ? prList.join('\n')  : 'No pull requests found for this release';
+
+      - name: Create GitHub Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ env.current_tag }}
+          name: ${{ github.event.inputs.release_name || env.current_tag }}
+          body: ${{ steps.generate_release_notes.outputs.result }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

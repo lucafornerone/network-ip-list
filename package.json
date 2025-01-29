@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/lucafornerone/network-ip-list/issues"
   },
-  "homepage": "https://www.npmjs.com/package/network-ip-list",
+  "homepage": "https://github.com/lucafornerone/network-ip-list#readme",
   "files": [
     "dist"
   ],

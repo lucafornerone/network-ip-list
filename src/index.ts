@@ -1,5 +1,5 @@
 import { v4 } from 'default-gateway';
-import { networkInterfaces, NetworkInterfaceInfo } from 'os';
+import { networkInterfaces, NetworkInterfaceInfo } from 'node:os';
 
 const v4Details = {
   family: 'IPv4',

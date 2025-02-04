@@ -19,7 +19,7 @@ describe('_v4GetIpList: v4 with 24 bit network', async () => {
 
     const main = proxyquire('../dist/index', {
       'default-gateway': defaultGateway,
-      os,
+      'node:os': os,
     });
 
     v4IpList = main.v4IpList;
@@ -152,7 +152,7 @@ describe('_v4GetIpList: v4 with 23 bit network', async () => {
 
     const main = proxyquire('../dist/index', {
       'default-gateway': defaultGateway,
-      os,
+      'node:os': os,
     });
 
     v4IpList = main.v4IpList;
@@ -252,7 +252,7 @@ describe('_v4GetIpList: throw v4 with 24 bit network', async () => {
 
     const main = proxyquire('../dist/index', {
       'default-gateway': defaultGateway,
-      os,
+      'node:os': os,
     });
 
     v4IpList = main.v4IpList;

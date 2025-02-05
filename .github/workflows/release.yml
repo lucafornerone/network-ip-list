@@ -28,11 +28,7 @@ jobs:
       - name: Get previous tag
         id: get_previous_tag
         run: |
-          if [ -z "${{ github.event.inputs.previous_tag }}" ]; then
-            previous_tag=$(git log --tags --simplify-by-decoration --pretty="format:%D" | grep -o "tag: [^,]*" | head -n 1 | sed 's/tag: //')
-          else
-            previous_tag=${{ github.event.inputs.previous_tag }}
-          fi
+          previous_tag=$(git log --tags --simplify-by-decoration --pretty="format:%D" | grep -o "tag: [^,]*" | head -n 1 | sed 's/tag: //')
           echo "previous_tag=$previous_tag" >> $GITHUB_ENV
 
       - name: Create new tag
@@ -62,7 +58,8 @@ jobs:
                 base: previousTag,
                 head: currentTag,
               });
-              commitList = commits.data.commits;
+              // order from newest to oldest
+              commitList = commits.data.commits.reverse();
             } else {
               const commits = await github.rest.repos.listCommits({
                 owner,
@@ -71,30 +68,10 @@ jobs:
               commitList = commits.data;
             }
 
-            // get pr title with GitHub api
-            const getPrInfo = async (prNumber) => {
-              const pr = await github.rest.pulls.get({
-                owner,
-                repo,
-                pull_number: prNumber
-              });
-              return {
-                title: pr.data.title,
-                prUrl: pr.data.html_url
-              };
-            };
-
-            // filter only 'Merge pull request' commits
             const prList = [];
             for (const commit of commitList) {
-              if (commit.commit.message.includes('Merge pull request')) {
-                const prNumber = commit.commit.message.match(/#(\d+)/)?.[1];
-                if (prNumber) {
-                  const prInfo = await getPrInfo(prNumber);
-                  if (!prInfo.title.startsWith('chore(main): release')) {
-                    prList.push(`- ${prInfo.title} ([#${prNumber}](${prInfo.prUrl})) ([${commit.sha.substring(0, 7)}](${commit.html_url}))`);
-                  }
-                }
+              if (!commit.commit.message.startsWith('chore(main): release')) {
+                prList.push(`- ${commit.commit.message} ([${commit.sha.substring(0, 7)}](${commit.html_url}))`);
               }
             }
 
@@ -105,7 +82,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.current_tag }}
-          name: ${{ github.event.inputs.release_name || env.current_tag }}
+          name: ${{ env.current_tag }}
           body: ${{ steps.generate_release_notes.outputs.result }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

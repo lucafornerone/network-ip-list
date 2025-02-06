@@ -16,7 +16,14 @@ export enum NetworkElement {
  * Generate ip list on IPv4 interface
  *
  * This function generates a list of available IPv4 addresses on the current network
+ *
  * Optionally, specific network elements (gateway, broadcast or the device's own IP can be omitted from the list
+ *
+ * @example
+ * ```typescript
+ * const ipList = await v4IpList();
+ * console.log(ipList); // ['192.168.1.1', '192.168.1.2', '192.168.1.3', '192.168.1.4', ... ]
+ * ```
  *
  * @param {Object} [options] - Optional configuration for filtering specific network elements
  * @param {NetworkElement[]} [options.omit] - An array of network elements (see NetworkElement enum) to omit from the list

@@ -1,32 +1,25 @@
+const { v4IpList, NetworkElement } = require('../dist/index');
+const fs = require('node:fs');
+const os = require('node:os');
+const defaultGateway = require('default-gateway');
 const { deepStrictEqual } = require('assert');
-const { NetworkElement } = require('../dist/index');
-const sinon = require('sinon');
-const proxyquire = require('proxyquire');
-const fs = require('fs');
 const path = require('path');
 const chai = require('chai');
 const expect = chai.expect;
 chai.use(require('chai-as-promised'));
 
 describe('_v4GetIpList: v4 with 24 bit network', async () => {
-  let v4IpList;
-  let defaultGateway;
-  let os;
+  let originalMethods;
 
   beforeEach(() => {
-    defaultGateway = { v4: sinon.stub() };
-    os = { networkInterfaces: sinon.stub() };
-
-    const main = proxyquire('../dist/index', {
-      'default-gateway': defaultGateway,
-      'node:os': os,
-    });
-
-    v4IpList = main.v4IpList;
+    originalMethods = {
+      v4: defaultGateway.v4,
+      networkInterfaces: os.networkInterfaces,
+    };
 
     // mock packages function
-    defaultGateway.v4.returns({ gateway: '192.168.1.1', interface: 'en0' });
-    os.networkInterfaces.returns({
+    defaultGateway.v4 = () => ({ gateway: '192.168.1.1', interface: 'en0' });
+    os.networkInterfaces = () => ({
       lo0: [
         {
           address: '127.0.0.1',
@@ -75,6 +68,11 @@ describe('_v4GetIpList: v4 with 24 bit network', async () => {
         },
       ],
     });
+  });
+
+  afterEach(() => {
+    defaultGateway.v4 = originalMethods.v4;
+    os.networkInterfaces = originalMethods.networkInterfaces;
   });
 
   describe('wifi interface with 192.168.1.1 gateway', () => {
@@ -142,24 +140,17 @@ describe('_v4GetIpList: v4 with 24 bit network', async () => {
 });
 
 describe('_v4GetIpList: v4 with 23 bit network', async () => {
-  let v4IpList;
-  let defaultGateway;
-  let os;
+  let originalMethods;
 
   beforeEach(() => {
-    defaultGateway = { v4: sinon.stub() };
-    os = { networkInterfaces: sinon.stub() };
-
-    const main = proxyquire('../dist/index', {
-      'default-gateway': defaultGateway,
-      'node:os': os,
-    });
-
-    v4IpList = main.v4IpList;
+    originalMethods = {
+      v4: defaultGateway.v4,
+      networkInterfaces: os.networkInterfaces,
+    };
 
     // mock packages function
-    defaultGateway.v4.returns({ gateway: '192.168.2.1', interface: 'Ethernet 3' });
-    os.networkInterfaces.returns({
+    defaultGateway.v4 = () => ({ gateway: '192.168.2.1', interface: 'Ethernet 3' });
+    os.networkInterfaces = () => ({
       'Ethernet 2': [
         {
           address: 'fe80::ace8:247:de0:2c00',
@@ -199,6 +190,11 @@ describe('_v4GetIpList: v4 with 23 bit network', async () => {
         },
       ],
     });
+  });
+
+  afterEach(() => {
+    defaultGateway.v4 = originalMethods.v4;
+    os.networkInterfaces = originalMethods.networkInterfaces;
   });
 
   describe('ethernet interface with 192.168.2.1 gateway', () => {
@@ -242,34 +238,32 @@ describe('_v4GetIpList: v4 with 23 bit network', async () => {
 });
 
 describe('_v4GetIpList: throw v4 with 24 bit network', async () => {
-  let v4IpList;
-  let defaultGateway;
-  let os;
+  let originalMethods;
 
   beforeEach(() => {
-    defaultGateway = { v4: sinon.stub() };
-    os = { networkInterfaces: sinon.stub() };
+    originalMethods = {
+      v4: defaultGateway.v4,
+      networkInterfaces: os.networkInterfaces,
+    };
+  });
 
-    const main = proxyquire('../dist/index', {
-      'default-gateway': defaultGateway,
-      'node:os': os,
-    });
-
-    v4IpList = main.v4IpList;
+  afterEach(() => {
+    defaultGateway.v4 = originalMethods.v4;
+    os.networkInterfaces = originalMethods.networkInterfaces;
   });
 
   it('should throw an error if network interface is not found', async () => {
     // mock packages function
-    defaultGateway.v4.returns({ gateway: '192.168.1.1', interface: 'en0' });
-    os.networkInterfaces.returns({});
+    defaultGateway.v4 = () => ({ gateway: '192.168.1.1', interface: 'en0' });
+    os.networkInterfaces = () => ({});
 
     await expect(v4IpList()).to.be.rejectedWith('interface not found');
   });
 
   it('should throw an error if v4 family is not found', async () => {
     // mock packages function
-    defaultGateway.v4.returns({ gateway: '192.168.1.1', interface: 'en0' });
-    os.networkInterfaces.returns({
+    defaultGateway.v4 = () => ({ gateway: '192.168.1.1', interface: 'en0' });
+    os.networkInterfaces = () => ({
       en0: [
         {
           address: 'fe80::146a:7118:260f:62a6',
@@ -288,8 +282,8 @@ describe('_v4GetIpList: throw v4 with 24 bit network', async () => {
 
   it('should throw an error if cidr is undefined in network interface', async () => {
     // mock packages function
-    defaultGateway.v4.returns({ gateway: '192.168.1.1', interface: 'en0' });
-    os.networkInterfaces.returns({
+    defaultGateway.v4 = () => ({ gateway: '192.168.1.1', interface: 'en0' });
+    os.networkInterfaces = () => ({
       en0: [
         {
           address: '192.168.1.11',

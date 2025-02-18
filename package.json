@@ -13,6 +13,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "build:bun": "bun build src/index.ts --target bun --outdir dist --packages=external",
     "test": "mocha",
     "prepare": "husky",
     "pretest": "npm run build"

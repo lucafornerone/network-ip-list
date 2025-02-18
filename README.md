@@ -5,11 +5,27 @@
 
 Easily generate a comprehensive list of available IPv4 addresses on your current network. This package includes filtering options, allowing you to exclude specific addresses such as routers, broadcast addresses, and your own device IP for a cleaner, more focused result.
 
+## Works on
+The package has been tested and works correctly on the following operating systems and runtimes:
+
+|             | Node | Bun  |
+|-------------|------|----- |
+| **macOS**   |  ✔  |  ✔  |
+| **Linux**   |  ✔  |  ✔  |
+| **Windows** |  ✔  |  ✔  |
 
 ## Installation
 
+Node:
+
 ```bash
 npm install network-ip-list
+```
+
+Bun:
+
+```bash
+bun install network-ip-list
 ```
 
 ## Usage
@@ -54,17 +70,24 @@ Example:
 })();
 ```
 
-### Test
+## Test
 
-For unit testing run the following command:
+Node:
 
 ```bash
 npm run test
 ```
 
+Bun:
+
+```bash
+bun run build:bun
+bun test
+```
+
 ## Contribute
 
-I'm happy to welcome any contribution, big or small — feel free to contribute however you prefer! Whether it's code or just suggestions, everything is appreciated.
+I'm happy to welcome any contribution, big or small, feel free to contribute however you prefer! Whether it's code or just suggestions, everything is appreciated.
 Please use the GitHub Discussions section to share your ideas or ask questions.
 
 The next big goal is to add IPv6 support, so if you'd like to help make that happen, you're more than welcome!

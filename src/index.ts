@@ -1,5 +1,5 @@
-import { v4 } from 'default-gateway';
-import { networkInterfaces, NetworkInterfaceInfo } from 'node:os';
+import os from 'node:os';
+import defaultGateway from 'default-gateway';
 
 const v4Details = {
   family: 'IPv4',
@@ -32,9 +32,9 @@ export enum NetworkElement {
  */
 export async function v4IpList(options?: { omit: NetworkElement[] }): Promise<string[]> {
   // gateway and interface of current network
-  const currentNetwork = await v4();
+  const currentNetwork = await defaultGateway.v4();
   // all interfaces available
-  const interfaces = networkInterfaces() as { [key: string]: NetworkInterfaceInfo[] };
+  const interfaces = os.networkInterfaces() as { [key: string]: os.NetworkInterfaceInfo[] };
 
   if (!interfaces[currentNetwork.interface]) {
     throw new Error('interface not found');

@@ -1,12 +1,16 @@
-const { v4IpList, NetworkElement } = require('../dist/index');
-const fs = require('node:fs');
-const os = require('node:os');
-const defaultGateway = require('default-gateway');
-const { deepStrictEqual } = require('assert');
-const path = require('path');
-const chai = require('chai');
+import { v4IpList, NetworkElement } from '../dist/index.js';
+import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { deepStrictEqual } from 'node:assert';
+import os from 'node:os';
+import defaultGateway from 'default-gateway';
+import * as chai from 'chai';
+import chaiAsPromised from 'chai-as-promised';
+
+chai.use(chaiAsPromised);
 const expect = chai.expect;
-chai.use(require('chai-as-promised'));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 describe('_v4GetIpList: v4 with 24 bit network', async () => {
   let originalMethods;
@@ -77,25 +81,22 @@ describe('_v4GetIpList: v4 with 24 bit network', async () => {
 
   describe('wifi interface with 192.168.1.1 gateway', () => {
     it('should return all network ip list', async () => {
-      const json = fs.readFileSync(path.join(__dirname, './v4-192.168.1.11-24/all.json'), 'utf8');
+      const json = readFileSync(join(__dirname, './v4-192.168.1.11-24/all.json'), 'utf8');
       const mock = JSON.parse(json);
       const result = await v4IpList();
       deepStrictEqual(result, mock);
     });
 
     it('should return network ip list without gateway', async () => {
-      const json = fs.readFileSync(
-        path.join(__dirname, './v4-192.168.1.11-24/omit-gateway.json'),
-        'utf8'
-      );
+      const json = readFileSync(join(__dirname, './v4-192.168.1.11-24/omit-gateway.json'), 'utf8');
       const mock = JSON.parse(json);
       const result = await v4IpList({ omit: NetworkElement.GATEWAY });
       deepStrictEqual(result, mock);
     });
 
     it('should return network ip list without current device', async () => {
-      const json = fs.readFileSync(
-        path.join(__dirname, './v4-192.168.1.11-24/omit-current-device.json'),
+      const json = readFileSync(
+        join(__dirname, './v4-192.168.1.11-24/omit-current-device.json'),
         'utf8'
       );
       const mock = JSON.parse(json);
@@ -104,8 +105,8 @@ describe('_v4GetIpList: v4 with 24 bit network', async () => {
     });
 
     it('should return network ip list without broadcast', async () => {
-      const json = fs.readFileSync(
-        path.join(__dirname, './v4-192.168.1.11-24/omit-broadcast.json'),
+      const json = readFileSync(
+        join(__dirname, './v4-192.168.1.11-24/omit-broadcast.json'),
         'utf8'
       );
       const mock = JSON.parse(json);
@@ -199,25 +200,22 @@ describe('_v4GetIpList: v4 with 23 bit network', async () => {
 
   describe('ethernet interface with 192.168.2.1 gateway', () => {
     it('should return all network ip list', async () => {
-      const json = fs.readFileSync(path.join(__dirname, './v4-192.168.3.220-23/all.json'), 'utf8');
+      const json = readFileSync(join(__dirname, './v4-192.168.3.220-23/all.json'), 'utf8');
       const mock = JSON.parse(json);
       const result = await v4IpList();
       deepStrictEqual(result, mock);
     });
 
     it('should return network ip list without gateway', async () => {
-      const json = fs.readFileSync(
-        path.join(__dirname, './v4-192.168.3.220-23/omit-gateway.json'),
-        'utf8'
-      );
+      const json = readFileSync(join(__dirname, './v4-192.168.3.220-23/omit-gateway.json'), 'utf8');
       const mock = JSON.parse(json);
       const result = await v4IpList({ omit: NetworkElement.GATEWAY });
       deepStrictEqual(result, mock);
     });
 
     it('should return network ip list without current device', async () => {
-      const json = fs.readFileSync(
-        path.join(__dirname, './v4-192.168.3.220-23/omit-current-device.json'),
+      const json = readFileSync(
+        join(__dirname, './v4-192.168.3.220-23/omit-current-device.json'),
         'utf8'
       );
       const mock = JSON.parse(json);
@@ -226,8 +224,8 @@ describe('_v4GetIpList: v4 with 23 bit network', async () => {
     });
 
     it('should return network ip list without broadcast', async () => {
-      const json = fs.readFileSync(
-        path.join(__dirname, './v4-192.168.3.220-23/omit-broadcast.json'),
+      const json = readFileSync(
+        join(__dirname, './v4-192.168.3.220-23/omit-broadcast.json'),
         'utf8'
       );
       const mock = JSON.parse(json);

@@ -30,16 +30,10 @@ bun install network-ip-list
 
 ## Usage
 
-ESM-syntax:
+Import:
 
 ```javascript
 import { v4IpList } from 'network-ip-list';
-```
-
-CommonJS:
-
-```javascript
-const { v4IpList } = require('network-ip-list');
 ```
 
 Example:
@@ -75,14 +69,15 @@ Example:
 Node:
 
 ```bash
+npm install
 npm run test
 ```
 
 Bun:
 
 ```bash
-bun run build:bun
-bun test
+bun install
+bun test test/v4-bun.test.ts
 ```
 
 ## Contribute

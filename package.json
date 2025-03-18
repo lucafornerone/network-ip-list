@@ -10,11 +10,12 @@
     "ipv4",
     "ip-list"
   ],
+  "type": "module",
+  "module": "src/index.ts",
   "license": "MIT",
   "scripts": {
     "build": "tsc",
-    "build:bun": "bun build src/index.ts --target bun --outdir dist --packages=external",
-    "test": "mocha",
+    "test": "mocha test/v4-node.test.mjs --timeout 10_000",
     "prepare": "husky",
     "pretest": "npm run build"
   },
@@ -33,18 +34,19 @@
     "dist"
   ],
   "dependencies": {
-    "default-gateway": "^6.0.3"
+    "network-default-gateway": "^1.0.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
     "@eslint/js": "^9.22.0",
-    "@types/default-gateway": "^3.0.1",
+    "@types/bun": "^1.2.5",
+    "@types/chai": "^5.2.0",
     "@types/node": "^22.13.10",
     "chai": "^5.2.0",
-    "chai-as-promised": "^8.0.1",
     "eslint": "^9.22.0",
     "eslint-config-prettier": "^10.1.1",
+    "esmock": "^2.7.0",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",

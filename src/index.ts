@@ -1,5 +1,4 @@
-import os from 'node:os';
-import defaultGateway from 'default-gateway';
+import { v4DefaultGateway } from 'network-default-gateway';
 
 const v4Details = {
   family: 'IPv4',
@@ -32,27 +31,7 @@ export enum NetworkElement {
  */
 export async function v4IpList(options?: { omit: NetworkElement[] }): Promise<string[]> {
   // gateway and interface of current network
-  const currentNetwork = await defaultGateway.v4();
-  // all interfaces available
-  const interfaces = os.networkInterfaces() as { [key: string]: os.NetworkInterfaceInfo[] };
-
-  if (!interfaces[currentNetwork.interface]) {
-    throw new Error('interface not found');
-  }
-
-  // IPv4 current interface
-  const int = interfaces[currentNetwork.interface].find((n) => n.family === v4Details.family);
-  if (!int) {
-    throw new Error('v4 family not found in interface');
-  }
-
-  if (!int.cidr) {
-    throw new Error('cidr not found');
-  }
-
-  // obtain prefix from Classless Inter-Domain Routing
-  const prefixLengthIndex = int.cidr.indexOf('/') + 1;
-  const prefixLength = Number(int.cidr.substring(prefixLengthIndex));
+  const { gateway, ip, prefixLength } = await v4DefaultGateway();
   // total addresses available in current network
   const totalAddresses = Math.pow(2, v4Details.bit - prefixLength);
   // ignore network address (the first one)
@@ -64,16 +43,14 @@ export async function v4IpList(options?: { omit: NetworkElement[] }): Promise<st
   }
 
   // ip list from gateway
-  const gateway = currentNetwork.gateway;
   let ipList = _v4GenerateIpRange(gateway, totalHosts);
 
   if (options?.omit.includes(NetworkElement.CURRENT_DEVICE)) {
-    const deviceIp = int.address;
-    ipList = ipList.filter((ip) => ip !== deviceIp);
+    ipList = ipList.filter((ipAddress) => ipAddress !== ip);
   }
 
   if (options?.omit.includes(NetworkElement.GATEWAY)) {
-    ipList = ipList.filter((ip) => ip !== gateway);
+    ipList = ipList.filter((ipAddress) => ipAddress !== gateway);
   }
 
   return ipList;

@@ -46,8 +46,5 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Run build
-        run: bun run build:bun
-
       - name: Run tests
-        run: bun test
+        run: bun test test/v4-bun.test.ts

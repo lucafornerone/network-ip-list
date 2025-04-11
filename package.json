@@ -5,11 +5,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "author": "Luca Fornerone",
-  "keywords": [
-    "network",
-    "ipv4",
-    "ip-list"
-  ],
+  "keywords": ["network", "ipv4", "ip-list"],
   "type": "module",
   "module": "src/index.ts",
   "license": "MIT",
@@ -20,7 +16,7 @@
     "pretest": "npm run build"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*": "biome format --write"
   },
   "repository": {
     "type": "git",
@@ -30,29 +26,21 @@
     "url": "https://github.com/lucafornerone/network-ip-list/issues"
   },
   "homepage": "https://github.com/lucafornerone/network-ip-list#readme",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "dependencies": {
     "network-default-gateway": "^1.0.1"
   },
   "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
     "@commitlint/cli": "^19.8.0",
     "@commitlint/config-conventional": "^19.8.0",
-    "@eslint/js": "^9.22.0",
-    "@types/bun": "^1.2.5",
-    "@types/chai": "^5.2.0",
-    "@types/node": "^22.13.10",
+    "@types/bun": "^1.2.9",
+    "@types/node": "^22.14.0",
     "chai": "^5.2.0",
-    "eslint": "^9.22.0",
-    "eslint-config-prettier": "^10.1.1",
     "esmock": "^2.7.0",
-    "globals": "^16.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "mocha": "^11.1.0",
-    "prettier": "^3.5.3",
-    "typescript": "^5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript": "^5.8.2"
   }
 }

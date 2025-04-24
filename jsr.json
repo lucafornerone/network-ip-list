@@ -2,7 +2,7 @@
   "name": "@lucafornerone/network-ip-list",
   "exports": "./index.ts",
   "license": "MIT",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "publish": {
     "include": ["LICENSE", "README.md", "index.ts"]
   },

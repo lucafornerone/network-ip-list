@@ -5,40 +5,36 @@
 
 Easily generate a comprehensive list of available IPv4 addresses on your current network. This package includes filtering options, allowing you to exclude specific addresses such as routers, broadcast addresses, and your own device IP for a cleaner, more focused result.
 
+It is ESM-only and fully written in TypeScript. It is available on JSR and npm.
+
 ## Works on
 The package has been tested and works correctly on the following operating systems and runtimes:
 
-|             | Node | Bun  |
-|-------------|------|----- |
-| **macOS**   |  ✔  |  ✔  |
-| **Linux**   |  ✔  |  ✔  |
-| **Windows** |  ✔  |  ✔  |
+|             | Bun  | Deno | Node |
+|-------------|------|------|------|
+| **macOS**   |  ✔  |  ✔   |  ✔  |
+| **Linux**   |  ✔  |  ✔   |  ✔  |
+| **Windows** |  ✔  |  ✔   |  ✔  |
 
-## Installation
+## JSR
 
-Node:
+For complete installation and usage details with JSR, visit the [package page](https://jsr.io/@lucafornerone/network-ip-list).
+
+From JSR, you can install the package and access documentation for all available methods. It is recommended for use with Bun and Deno, with sources available directly in TypeScript.
+
+## npm
+
+Installation:
 
 ```bash
 npm install network-ip-list
 ```
 
-Bun:
-
-```bash
-bun install network-ip-list
-```
-
-## Usage
-
-Import:
+## Usage example
 
 ```javascript
 import { v4IpList } from 'network-ip-list';
-```
 
-Example:
-
-```javascript
 (async () => {
   // Get all available IPv4 addresses in the network
   const ipList = await v4IpList();
@@ -66,18 +62,24 @@ Example:
 
 ## Test
 
-Node:
-
-```bash
-npm install
-npm run test
-```
-
 Bun:
 
 ```bash
 bun install
 bun test test/v4-bun.test.ts
+```
+
+Deno:
+
+```bash
+deno test test/v4-deno.test.ts --allow-run
+```
+
+Node:
+
+```bash
+npm install
+npm run test
 ```
 
 ## Contribute

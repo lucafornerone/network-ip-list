@@ -5,9 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { deepStrictEqual } from 'node:assert';
 import { expect } from 'chai';
 import esmock from 'esmock';
-
-export const IPv4_REGEX =
-  /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$/;
+import { IPv4_REGEX } from './v4-regex.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 async function getJsonByFilePath(path) {

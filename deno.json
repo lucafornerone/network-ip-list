@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "network-default-gateway": "jsr:@lucafornerone/network-default-gateway@1.0.2"
+  }
+}

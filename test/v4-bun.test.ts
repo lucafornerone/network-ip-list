@@ -1,8 +1,6 @@
-import { v4IpList, NetworkElement } from '../src/index.ts';
+import { v4IpList, NetworkElement } from '../index.ts';
 import { describe, it, expect, mock, beforeEach } from 'bun:test';
-
-export const IPv4_REGEX =
-  /^(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])(\.(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[1-9]?[0-9])){3}$/;
+import { IPv4_REGEX } from './v4-regex.mjs';
 
 async function getJsonByFilePath(path: string): Promise<string[]> {
   const file = Bun.file(`${import.meta.dir}/${path}`);

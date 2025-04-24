@@ -16,5 +16,5 @@
     "noPropertyAccessFromIndexSignature": false,
     "moduleResolution": "NodeNext"
   },
-  "include": ["src/**/*"]
+  "include": ["index.ts"]
 }

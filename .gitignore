@@ -3,3 +3,5 @@ node_modules/
 .idea/
 .vscode/
 bun.lock
+deno.lock
+package-lock.json

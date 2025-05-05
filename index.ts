@@ -5,6 +5,15 @@ const v4Details = {
   bit: 32,
 };
 
+/**
+ * Enum that defines different types of network elements
+ *
+ * - `GATEWAY`: Refers to the network gateway, which routes traffic between networks
+ * - `CURRENT_DEVICE`: Refers to the device's own IP address in the network
+ * - `BROADCAST`: Refers to the broadcast address used to send data to all devices in the network
+ *
+ * @enum {string}
+ */
 export enum NetworkElement {
   GATEWAY = 'gateway',
   CURRENT_DEVICE = 'current-device',

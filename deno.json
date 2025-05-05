@@ -7,7 +7,7 @@
     "include": ["LICENSE", "README.md", "index.ts"]
   },
   "imports": {
-    "network-default-gateway": "jsr:@lucafornerone/network-default-gateway@1.0.2"
+    "network-default-gateway": "jsr:@lucafornerone/network-default-gateway@1.0.3"
   },
   "compilerOptions": {}
 }

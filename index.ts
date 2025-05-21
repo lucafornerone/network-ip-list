@@ -77,7 +77,7 @@ export async function v4IpList(options?: { omit: NetworkElement[] }): Promise<st
  */
 function _v4GenerateIpRange(ip: string, n: number): string[] {
   const ipParts = ip.split('.').map(Number);
-  let ipList = [];
+  const ipList = [];
 
   for (let i = 0; i < n; i++) {
     ipList.push(ipParts.join('.'));

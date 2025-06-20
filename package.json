@@ -5,7 +5,11 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "author": "Luca Fornerone",
-  "keywords": ["network", "ipv4", "ip-list"],
+  "keywords": [
+    "network",
+    "ipv4",
+    "ip-list"
+  ],
   "type": "module",
   "module": "index.ts",
   "license": "MIT",
@@ -16,7 +20,10 @@
     "pretest": "npm run build"
   },
   "lint-staged": {
-    "**/*": ["biome lint", "biome format --write"]
+    "**/*": [
+      "biome lint",
+      "biome format --write"
+    ]
   },
   "repository": {
     "type": "git",
@@ -26,22 +33,24 @@
     "url": "https://github.com/lucafornerone/network-ip-list/issues"
   },
   "homepage": "https://github.com/lucafornerone/network-ip-list#readme",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "dependencies": {
-    "network-default-gateway": "1.0.4"
+    "network-default-gateway": "1.0.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^2.0.0",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@types/bun": "^1.2.13",
+    "@types/bun": "^1.2.16",
     "@types/chai": "^5.2.2",
-    "@types/node": "^22.15.21",
+    "@types/node": "^24.0.3",
     "chai": "^5.2.0",
     "esmock": "^2.7.0",
     "husky": "^9.1.7",
-    "lint-staged": "^16.0.0",
-    "mocha": "^11.4.0",
+    "lint-staged": "^16.1.2",
+    "mocha": "^11.7.0",
     "typescript": "^5.8.3"
   }
 }

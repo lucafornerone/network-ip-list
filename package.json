@@ -37,20 +37,20 @@
     "dist"
   ],
   "dependencies": {
-    "network-default-gateway": "1.0.5"
+    "network-default-gateway": "1.1.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.0",
+    "@biomejs/biome": "2.1.1",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
-    "@types/bun": "^1.2.16",
+    "@types/bun": "^1.2.18",
     "@types/chai": "^5.2.2",
-    "@types/node": "^24.0.3",
-    "chai": "^5.2.0",
-    "esmock": "^2.7.0",
+    "@types/node": "^24.0.12",
+    "chai": "^5.2.1",
+    "esmock": "^2.7.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
-    "mocha": "^11.7.0",
+    "mocha": "^11.7.1",
     "typescript": "^5.8.3"
   }
 }

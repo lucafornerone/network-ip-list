@@ -1,10 +1,10 @@
-import { v4IpList, NetworkElement } from '../dist/index.js';
+import { deepStrictEqual } from 'node:assert';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { deepStrictEqual } from 'node:assert';
 import { expect } from 'chai';
 import esmock from 'esmock';
+import { NetworkElement, v4IpList } from '../dist/index.js';
 import { IPv4_REGEX } from './v4-regex.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));

@@ -1,5 +1,5 @@
-import { v4IpList, NetworkElement } from '../index.ts';
-import { describe, it, expect, mock, beforeEach } from 'bun:test';
+import { beforeEach, describe, expect, it, mock } from 'bun:test';
+import { NetworkElement, v4IpList } from '../index.ts';
 import { IPv4_REGEX } from './v4-regex.mjs';
 
 async function getJsonByFilePath(path: string): Promise<string[]> {

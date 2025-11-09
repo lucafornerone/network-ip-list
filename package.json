@@ -29,7 +29,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/lucafornerone/network-ip-list"
+    "url": "git+https://github.com/lucafornerone/network-ip-list.git"
   },
   "bugs": {
     "url": "https://github.com/lucafornerone/network-ip-list/issues"

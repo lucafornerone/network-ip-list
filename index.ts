@@ -8,16 +8,16 @@ const v4Details = {
 /**
  * Enum that defines different types of network elements
  *
- * - `GATEWAY`: Refers to the network gateway, which routes traffic between networks
- * - `CURRENT_DEVICE`: Refers to the device's own IP address in the network
- * - `BROADCAST`: Refers to the broadcast address used to send data to all devices in the network
+ * - `Gateway`: Refers to the network gateway, which routes traffic between networks
+ * - `CurrentDevice`: Refers to the device's own IP address in the network
+ * - `Broadcast`: Refers to the broadcast address used to send data to all devices in the network
  *
  * @enum {string}
  */
 export enum NetworkElement {
-  GATEWAY = 'gateway',
-  CURRENT_DEVICE = 'current-device',
-  BROADCAST = 'broadcast',
+  Gateway = 'gateway',
+  CurrentDevice = 'current-device',
+  Broadcast = 'broadcast',
 }
 
 /**
@@ -46,7 +46,7 @@ export async function v4IpList(options?: { omit: NetworkElement[] }): Promise<st
   // ignore network address (the first one)
   let totalHosts = totalAddresses - 1;
 
-  if (options?.omit.includes(NetworkElement.BROADCAST)) {
+  if (options?.omit.includes(NetworkElement.Broadcast)) {
     // remove broadcast address (the last one)
     totalHosts--;
   }
@@ -54,11 +54,11 @@ export async function v4IpList(options?: { omit: NetworkElement[] }): Promise<st
   // ip list from gateway
   let ipList = _v4GenerateIpRange(gateway, totalHosts);
 
-  if (options?.omit.includes(NetworkElement.CURRENT_DEVICE)) {
+  if (options?.omit.includes(NetworkElement.CurrentDevice)) {
     ipList = ipList.filter((ipAddress) => ipAddress !== ip);
   }
 
-  if (options?.omit.includes(NetworkElement.GATEWAY)) {
+  if (options?.omit.includes(NetworkElement.Gateway)) {
     ipList = ipList.filter((ipAddress) => ipAddress !== gateway);
   }
 

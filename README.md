@@ -48,7 +48,7 @@ import { v4IpList } from 'network-ip-list';
 
   // Omit the gateway and device's own IP from the results
   const filteredIpList = await v4IpList({
-    omit: [NetworkElement.GATEWAY, NetworkElement.CURRENT_DEVICE],
+    omit: [NetworkElement.Gateway, NetworkElement.CurrentDevice],
   });
   console.log(filteredIpList);
   /*

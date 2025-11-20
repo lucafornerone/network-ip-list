@@ -3,12 +3,18 @@
 
 ## Purpose
 
-Easily generate a comprehensive list of available IPv4 addresses on your current network. This package includes filtering options, allowing you to exclude specific addresses such as routers, broadcast addresses, and your own device IP for a cleaner, more focused result.
+Easily generate a comprehensive list of available IPv4 addresses on your current active network connection.
+
+This package includes filtering options, allowing you to exclude specific addresses such as routers, broadcast addresses, and your own device IP for a cleaner, more focused result.
+
+## How it works
+
+This package uses the [network-default-gateway](https://npmjs.com/package/network-default-gateway) module to retrieve the default gateway, the device’s IP address, and the prefix length of the active network connection. With this information, it computes all possible IPv4 addresses within the subnet and returns them as a complete list.
 
 It is ESM-only and fully written in TypeScript. It is available on JSR and npm.
 
 ## Works on
-The package has been tested and works correctly on the following operating systems and runtimes:
+This package has been tested and works correctly on the following operating systems and runtimes:
 
 |             | Bun  | Deno | Node |
 |-------------|------|------|------|
@@ -33,7 +39,7 @@ npm install network-ip-list
 ## Usage example
 
 ```javascript
-import { v4IpList } from 'network-ip-list';
+import { NetworkElement, v4IpList } from 'network-ip-list';
 
 (async () => {
   // Get all available IPv4 addresses in the network

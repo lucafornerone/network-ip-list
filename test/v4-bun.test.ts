@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, mock } from 'bun:test';
+import { isIPv4 } from 'node:net';
 import { NetworkElement, v4IpList } from '../index.ts';
-import { IPv4_REGEX } from './v4-regex.mjs';
 
 async function getJsonByFilePath(path: string): Promise<string[]> {
   const file = Bun.file(`${import.meta.dir}/${path}`);
@@ -10,7 +10,7 @@ async function getJsonByFilePath(path: string): Promise<string[]> {
 describe('_v4GetIpList: v4 address validation', () => {
   it('should return only valid IPv4 addresses', async () => {
     const result = await v4IpList();
-    expect(result.every((ip) => IPv4_REGEX.test(ip))).toBe(true);
+    expect(result.every((ip) => isIPv4(ip))).toBe(true);
   });
 });
 

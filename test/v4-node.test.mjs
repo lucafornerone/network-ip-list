@@ -1,11 +1,11 @@
 import { deepStrictEqual } from 'node:assert';
 import { readFileSync } from 'node:fs';
+import { isIPv4 } from 'node:net';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect } from 'chai';
 import esmock from 'esmock';
 import { NetworkElement, v4IpList } from '../dist/index.js';
-import { IPv4_REGEX } from './v4-regex.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 async function getJsonByFilePath(path) {
@@ -16,7 +16,7 @@ async function getJsonByFilePath(path) {
 describe('_v4GetIpList: v4 address validation', () => {
   it('should return only valid IPv4 addresses', async () => {
     const result = await v4IpList();
-    expect(result.every((ip) => IPv4_REGEX.test(ip))).to.be.true;
+    expect(result.every((ip) => isIPv4(ip))).to.be.true;
   });
 });
 

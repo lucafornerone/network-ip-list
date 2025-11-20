@@ -4,8 +4,8 @@
  */
 
 import { assertEquals } from 'jsr:@std/assert';
+import { isIPv4 } from 'node:net';
 import { v4IpList } from '../index.ts';
-import { IPv4_REGEX } from './v4-regex.mjs';
 
 const ipList = await v4IpList();
 
@@ -15,7 +15,7 @@ Deno.test('_v4DefaultGateway: should return a populated listresult', () => {
 
 Deno.test('_v4DefaultGateway: should only return valid IPv4 addresses', () => {
   assertEquals(
-    ipList.every((ip) => IPv4_REGEX.test(ip)),
+    ipList.every((ip) => isIPv4(ip)),
     true
   );
 });

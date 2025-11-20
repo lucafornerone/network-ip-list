@@ -9,5 +9,6 @@
   "imports": {
     "network-default-gateway": "jsr:@lucafornerone/network-default-gateway@1.2.0"
   },
-  "compilerOptions": {}
+  "compilerOptions": {},
+  "nodeModulesDir": "none"
 }

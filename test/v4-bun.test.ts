@@ -35,40 +35,40 @@ describe('_v4GetIpList: v4 with 24 bit network', () => {
 
     it('should return network ip list without gateway', async () => {
       const json = await getJsonByFilePath('v4-192.168.1.11-24/omit-gateway.json');
-      const result = await v4IpList({ omit: [NetworkElement.GATEWAY] });
+      const result = await v4IpList({ omit: [NetworkElement.Gateway] });
       expect(result).toEqual(json);
     });
 
     it('should return network ip list without current device', async () => {
       const json = await getJsonByFilePath('v4-192.168.1.11-24/omit-current-device.json');
-      const result = await v4IpList({ omit: [NetworkElement.CURRENT_DEVICE] });
+      const result = await v4IpList({ omit: [NetworkElement.CurrentDevice] });
       expect(result).toEqual(json);
     });
 
     it('should return network ip list without broadcast', async () => {
       const json = await getJsonByFilePath('v4-192.168.1.11-24/omit-broadcast.json');
-      const result = await v4IpList({ omit: [NetworkElement.BROADCAST] });
+      const result = await v4IpList({ omit: [NetworkElement.Broadcast] });
       expect(result).toEqual(json);
     });
 
     it('should not include the gateway if it is specified in the omit parameter', async () => {
-      const result = await v4IpList({ omit: [NetworkElement.GATEWAY] });
+      const result = await v4IpList({ omit: [NetworkElement.Gateway] });
       expect(result).not.toContain('192.168.1.1');
     });
 
     it('should not include the current device ip if it is specified in the omit parameter', async () => {
-      const result = await v4IpList({ omit: [NetworkElement.CURRENT_DEVICE] });
+      const result = await v4IpList({ omit: [NetworkElement.CurrentDevice] });
       expect(result).not.toContain('192.168.1.11');
     });
 
     it('should not include the broadcast if it is specified in the omit parameter', async () => {
-      const result = await v4IpList({ omit: [NetworkElement.BROADCAST] });
+      const result = await v4IpList({ omit: [NetworkElement.Broadcast] });
       expect(result).not.toContain('192.168.1.255');
     });
 
     it('should not include the gateway, current device ip, or broadcast if they are specified in the omit parameter', async () => {
       const result = await v4IpList({
-        omit: [NetworkElement.GATEWAY, NetworkElement.CURRENT_DEVICE, NetworkElement.BROADCAST],
+        omit: [NetworkElement.Gateway, NetworkElement.CurrentDevice, NetworkElement.Broadcast],
       });
       expect(
         ['192.168.1.1', '192.168.1.11', '192.168.1.255'].every((ip) => !result.includes(ip))
@@ -98,19 +98,19 @@ describe('_v4GetIpList: v4 with 23 bit network', () => {
 
     it('should return network ip list without gateway', async () => {
       const json = await getJsonByFilePath('v4-192.168.3.220-23/omit-gateway.json');
-      const result = await v4IpList({ omit: [NetworkElement.GATEWAY] });
+      const result = await v4IpList({ omit: [NetworkElement.Gateway] });
       expect(result).toEqual(json);
     });
 
     it('should return network ip list without current device', async () => {
       const json = await getJsonByFilePath('v4-192.168.3.220-23/omit-current-device.json');
-      const result = await v4IpList({ omit: [NetworkElement.CURRENT_DEVICE] });
+      const result = await v4IpList({ omit: [NetworkElement.CurrentDevice] });
       expect(result).toEqual(json);
     });
 
     it('should return network ip list without broadcast', async () => {
       const json = await getJsonByFilePath('v4-192.168.3.220-23/omit-broadcast.json');
-      const result = await v4IpList({ omit: [NetworkElement.BROADCAST] });
+      const result = await v4IpList({ omit: [NetworkElement.Broadcast] });
       expect(result).toEqual(json);
     });
   });

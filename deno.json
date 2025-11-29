@@ -1,6 +1,6 @@
 {
   "imports": {
-    "network-default-gateway": "jsr:@lucafornerone/network-default-gateway@1.2.1"
+    "network-default-gateway": "jsr:@lucafornerone/network-default-gateway@1.2.2"
   },
   "nodeModulesDir": "none"
 }

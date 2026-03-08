@@ -20,7 +20,8 @@ const mocksDefaultGateway = {
 };
 
 async function getJsonByFilePath(path: string): Promise<string[]> {
-  const file = await import(`${import.meta.dirname}/../${path}`, { with: { type: 'json' } });
+  const fileUrl = new URL(`../${path}`, import.meta.url).href;
+  const file = await import(fileUrl, { with: { type: 'json' } });
   return file.default;
 }
 

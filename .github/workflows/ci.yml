@@ -48,7 +48,7 @@ jobs:
           deno-version: latest
 
       - name: Run tests
-        run: deno test test/v4-deno.test.ts --allow-run
+        run: deno test test/deno/v4-deno.test.ts --import-map test/deno/deno.test.json --allow-run --allow-read
 
   run-node-tests:
     name: Run Node tests

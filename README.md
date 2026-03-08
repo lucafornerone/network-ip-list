@@ -78,7 +78,7 @@ bun test test/v4-bun.test.ts
 Deno:
 
 ```bash
-deno test test/v4-deno.test.ts --allow-run
+deno test test/deno/v4-deno.test.ts --import-map test/deno/deno.test.json --allow-run --allow-read
 ```
 
 Node:

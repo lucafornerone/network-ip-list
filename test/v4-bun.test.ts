@@ -12,6 +12,17 @@ describe('_v4GetIpList: v4 address validation', () => {
     const result = await v4IpList();
     expect(result.every((ip) => isIPv4(ip))).toBe(true);
   });
+
+  it('should return a populated list', async () => {
+    const result = await v4IpList();
+    expect(result && result.length > 0).toBe(true);
+  });
+
+  it('should not contain duplicate elements', async () => {
+    const result = await v4IpList();
+    const uniqueIpList = [...new Set(result)];
+    expect(result.length).toEqual(uniqueIpList.length);
+  });
 });
 
 describe('_v4GetIpList: v4 with 24 bit network', () => {

@@ -1,4 +1,4 @@
-import { deepStrictEqual } from 'node:assert';
+import { deepStrictEqual, strictEqual } from 'node:assert';
 import { readFileSync } from 'node:fs';
 import { isIPv4 } from 'node:net';
 import { dirname, join } from 'node:path';
@@ -9,14 +9,25 @@ import { NetworkElement, v4IpList } from '../dist/index.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 async function getJsonByFilePath(path) {
-  const json = readFileSync(join(__dirname, path), 'utf8');
-  return JSON.parse(json);
+  const file = readFileSync(join(__dirname, path), 'utf8');
+  return JSON.parse(file);
 }
 
 describe('_v4GetIpList: v4 address validation', () => {
   it('should return only valid IPv4 addresses', async () => {
     const result = await v4IpList();
     expect(result.every((ip) => isIPv4(ip))).to.be.true;
+  });
+
+  it('should return a populated list', async () => {
+    const result = await v4IpList();
+    expect(result && result.length > 0).to.be.true;
+  });
+
+  it('should not contain duplicate elements', async () => {
+    const result = await v4IpList();
+    const uniqueIpList = [...new Set(result)];
+    strictEqual(result.length, uniqueIpList.length);
   });
 });
 

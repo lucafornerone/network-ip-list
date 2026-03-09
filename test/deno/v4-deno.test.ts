@@ -1,4 +1,4 @@
-import { v4DefaultGateway } from 'jsr:@lucafornerone/network-default-gateway@1.2.4';
+import { v4DefaultGateway } from 'jsr:@lucafornerone/network-default-gateway@1.3.0';
 import { assert, assertEquals } from 'jsr:@std/assert';
 import { isIPv4 } from 'node:net';
 import { NetworkElement, v4IpList } from '../../index.ts';

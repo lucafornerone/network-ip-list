@@ -8,7 +8,6 @@
     "declaration": true,
     "outDir": "./dist",
     "rewriteRelativeImportExtensions": true,
-    "strict": true,
     "skipLibCheck": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": false,

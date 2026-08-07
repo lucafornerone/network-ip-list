@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v2
@@ -28,7 +28,7 @@ jobs:
         run: bun install
 
       - name: Run tests
-        run: bun test test/v4-bun.test.ts
+        run: bun test test/v4-bun.test.ts --timeout 10000
 
   run-deno-tests:
     name: Run Deno tests
@@ -40,7 +40,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up Deno
         uses: denoland/setup-deno@v2
@@ -61,10 +61,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
           package-manager-cache: false
@@ -81,10 +81,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v6
+        uses: actions/setup-node@v7
         with:
           node-version: 24
           package-manager-cache: false

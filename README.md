@@ -72,7 +72,7 @@ Bun:
 
 ```bash
 bun install
-bun test test/v4-bun.test.ts --timeout 10000
+bun test test/v4-bun.test.ts
 ```
 
 Deno:

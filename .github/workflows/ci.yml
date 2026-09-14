@@ -28,7 +28,7 @@ jobs:
         run: bun install
 
       - name: Run tests
-        run: bun test test/v4-bun.test.ts --timeout 10000
+        run: bun test test/v4-bun.test.ts --timeout ${{ vars.TEST_TIMEOUT }}
 
   run-deno-tests:
     name: Run Deno tests

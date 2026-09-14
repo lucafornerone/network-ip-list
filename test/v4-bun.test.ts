@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, mock } from 'bun:test';
+import { beforeAll, beforeEach, describe, expect, it, mock } from 'bun:test';
 import { isIPv4 } from 'node:net';
 import { NetworkElement, v4IpList } from '../index.ts';
 
@@ -8,18 +8,21 @@ async function getJsonByFilePath(path: string): Promise<string[]> {
 }
 
 describe('_v4GetIpList: v4 address validation', () => {
-  it('should return only valid IPv4 addresses', async () => {
-    const result = await v4IpList();
+  let result: string[];
+
+  beforeAll(async () => {
+    result = await v4IpList();
+  });
+
+  it('should return only valid IPv4 addresses', () => {
     expect(result.every((ip) => isIPv4(ip))).toBe(true);
   });
 
-  it('should return a populated list', async () => {
-    const result = await v4IpList();
+  it('should return a populated list', () => {
     expect(result && result.length > 0).toBe(true);
   });
 
-  it('should not contain duplicate elements', async () => {
-    const result = await v4IpList();
+  it('should not contain duplicate elements', () => {
     const uniqueIpList = [...new Set(result)];
     expect(result.length).toEqual(uniqueIpList.length);
   });

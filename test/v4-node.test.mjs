@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect } from 'chai';
 import esmock from 'esmock';
+import { before } from 'mocha';
 import { NetworkElement, v4IpList } from '../dist/index.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -14,18 +15,21 @@ async function getJsonByFilePath(path) {
 }
 
 describe('_v4GetIpList: v4 address validation', () => {
-  it('should return only valid IPv4 addresses', async () => {
-    const result = await v4IpList();
+  let result;
+
+  before(async () => {
+    result = await v4IpList();
+  });
+
+  it('should return only valid IPv4 addresses', () => {
     expect(result.every((ip) => isIPv4(ip))).to.be.true;
   });
 
-  it('should return a populated list', async () => {
-    const result = await v4IpList();
+  it('should return a populated list', () => {
     expect(result && result.length > 0).to.be.true;
   });
 
-  it('should not contain duplicate elements', async () => {
-    const result = await v4IpList();
+  it('should not contain duplicate elements', () => {
     const uniqueIpList = [...new Set(result)];
     strictEqual(result.length, uniqueIpList.length);
   });
